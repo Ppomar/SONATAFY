@@ -1,0 +1,30 @@
+﻿@model List<Models.Product>
+
+<style>
+    table{
+        font-size: 200%;
+    }
+</style>
+
+<h2>++++++++++++++++++++++++++++++++++++++++++++++++++++++++</h2>
+<h2>************************** SALES ***********************</h2>
+<h2>++++++++++++++++++++++++++++++++++++++++++++++++++++++++</h2>
+
+<table>
+    @foreach (var product in Model)
+    {
+        <tr>
+            <td>@product.Name: @product.Total (@product.Quantity * @product.Price)</td>
+        </tr>
+    }
+    <tr>
+        <td>Sales Taxes: @Model.Select(x => { return x.Taxe; }).Sum()</td>
+    </tr>
+    <tr>
+        <td>Total: @Model.Select(x => { return Decimal.Round((x.Taxe + x.Total), 2); }).Sum()</td>
+    </tr>
+</table>
+
+<h2>++++++++++++++++++++++++++++++++++++++++++++++++++++++++</h2>
+<h2>************************** THANKS **********************</h2>
+<h2>++++++++++++++++++++++++++++++++++++++++++++++++++++++++</h2>

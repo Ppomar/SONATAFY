@@ -12,7 +12,7 @@ namespace DataAccess
     public class ProductRepository : ConnectionElement
     {
         /// <summary>
-        /// Get the last 100 products that were modfied
+        /// Get the last 100 products that were modified
         /// </summary>
         /// <returns>List of products</returns>
         public static List<Product> GetAll()
@@ -27,6 +27,80 @@ namespace DataAccess
                 cmd.Connection = conn;
                 cmd.CommandText = "SP_PRODUCT_GET_ALL";
                 cmd.CommandType = CommandType.StoredProcedure;
+                var dr = cmd.ExecuteReader();
+
+                list = BuildList(dr);
+            }
+            catch (Exception ex)
+            {
+
+            }
+            finally
+            {
+                if (conn != null)
+                {
+                    conn.Close();
+                }
+            }
+
+            return list;
+        }
+
+        /// <summary>
+        /// Get the last 100 products that were modified by name
+        /// </summary>
+        /// <returns>List of products</returns>
+        public static List<Product> FilterProducts(string productName)
+        {
+            SqlConnection conn = null;
+            var list = new List<Product>();
+
+            try
+            {
+                conn = OpenConnection();
+                var cmd = new SqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandText = "SP_PRODUCT_FILTER_NAME";
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add(new SqlParameter("@Name", productName)); ;
+
+                var dr = cmd.ExecuteReader();
+
+                list = BuildList(dr);
+            }
+            catch (Exception ex)
+            {
+
+            }
+            finally
+            {
+                if (conn != null)
+                {
+                    conn.Close();
+                }
+            }
+
+            return list;
+        }
+
+        /// <summary>
+        /// Get product by Id
+        /// </summary>
+        /// <returns>Get a product</returns>
+        public static List<Product> GetById(int id)
+        {
+            SqlConnection conn = null;
+            var list = new List<Product>();
+
+            try
+            {
+                conn = OpenConnection();
+                var cmd = new SqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandText = "SP_PRODUCT_GET_BY_ID";
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add(new SqlParameter("@Id", id)); ;
+
                 var dr = cmd.ExecuteReader();
 
                 list = BuildList(dr);

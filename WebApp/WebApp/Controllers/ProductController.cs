@@ -25,6 +25,24 @@ namespace WebApp.Controllers
             return Json(categories, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpGet]
+        public ActionResult FilterProducts(string productName)
+        {
+            var business = new ProductLogic();
+            var categories = business.FilterProducts(productName);
+
+            return Json(categories, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public ActionResult GetByIdProduct(int id)
+        {
+            var business = new ProductLogic();
+            var categories = business.GetById(id);
+
+            return Json(categories, JsonRequestBehavior.AllowGet);
+        }
+
         [HttpPost]
         public ActionResult Create([Bind(Include = "Name, Presentation, Price, CategoryId")] Product product)
         {

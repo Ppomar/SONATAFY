@@ -24,6 +24,51 @@ namespace Business
             return list;
         }
 
+        public List<Product> FilterProducts(string productName)
+        {
+            var list = ProductRepository.FilterProducts(productName);
+
+            // Get string date with format
+            list = list.Select(x => {
+                x.Created = x.CreatedDate.ToString("yyyy/MM/dd hh:mm tt");                
+                return x;
+            }
+            ).ToList();
+
+            return list;
+        }
+
+        private static decimal CalculateTaxe(int categoryId, decimal price)
+        {
+            decimal taxe = 0;
+            switch (categoryId)
+            {
+                case 4:
+                    taxe = Decimal.Round((price * Convert.ToDecimal("0.10")), 2);
+                    break;
+                default:
+                    break;
+            }
+
+            return taxe;
+
+        }
+
+        public Product GetById(int id)
+        {
+            var list = ProductRepository.GetById(id);
+
+            // Get string date with format
+            var product = list.Select(x => {
+                x.Created = x.CreatedDate.ToString("yyyy/MM/dd hh:mm tt");
+                x.Taxe = Decimal.Round(CalculateTaxe(x.CategoryId, x.Price), 1);
+                return x;
+            }
+            ).FirstOrDefault();
+
+            return product;
+        }
+
         public string Create(Product product)
         {
             product.CreatedBy = Environment.UserName;

@@ -14,8 +14,11 @@ namespace Models
         public int CategoryId { get; set; }
         public string CategoryName { get; set; }
         public decimal Price { get; set; }
+        public decimal Total { get; set; }
         public string Created { get; set; }
         public DateTime CreatedDate { get; set; }
         public string CreatedBy { get; set; }
+        public decimal Taxe { get; set; }
+        public int Quantity { get; set; }
     }
 }

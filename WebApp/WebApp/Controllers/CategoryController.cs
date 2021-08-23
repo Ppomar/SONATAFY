@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using Business;
+using Models;
 
 namespace WebApp.Controllers
 {
@@ -23,5 +20,22 @@ namespace WebApp.Controllers
 
             return Json(categories, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpPost]
+        public ActionResult Create(Category category) 
+        {
+            if (!ModelState.IsValid)
+            {
+                var business = new CategoryLogic();
+                var response = business.CreateCategory(category);
+                return Json(response, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json("MNOK", JsonRequestBehavior.AllowGet);
+            }
+        }
+
+
     }
 }

@@ -64,6 +64,11 @@ namespace DataAccess
                 cmd.Connection = conn;
                 cmd.CommandText = "SP_CATEGORY_CREATE";
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add(new SqlParameter("@Name", category.Name));
+                cmd.Parameters.Add(new SqlParameter("@Description", category.Description));
+                cmd.Parameters.Add(new SqlParameter("@CreatedBy", category.CreatedBy));
+                cmd.Parameters.Add(new SqlParameter("@CreatedDate", category.CreatedDate));
+
                 cmd.ExecuteNonQuery();
 
                 response = true;
@@ -134,6 +139,9 @@ namespace DataAccess
                 category.Id = Convert.ToInt32(dr["Id"].ToString());
                 category.Name = dr["Name"].ToString();
                 category.Description = dr["Description"].ToString();
+                category.CreatedDate = Convert.ToDateTime(dr["LastUpdatedDate"].ToString());
+
+                list.Add(category);
             }
 
             return list;

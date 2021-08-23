@@ -8,7 +8,7 @@ $(document).ready(function () {
 
     $("#btnNewOpenModal").click(function () {
         CleanModal(true);
-        $("#txtId").prop("hidden", true);
+        $("#dvId").prop("hidden", true);
     });
 
     $("#btnSave").click(function () {
@@ -16,8 +16,32 @@ $(document).ready(function () {
         if ($isCreating) {
             Create(category);
         }
+        else {
+            Edit(category);
+        }
+    });
+
+    $('#tblCategories tbody').on('click', '.edit', function () {
+        var data = $dataObject.row($(this).parents('tr')).data();
+        LoadModelEdit(data);
+    });
+
+    $('#tblCategories tbody').on('click', '.delete', function () {
+        var data = $dataObject.row($(this).parents('tr')).data();
+        if (confirm("Are you sure you want delete " + data.Id + "-" + data.Name)) {
+            Delete(data);
+        }        
     });
 });
+
+function LoadModelEdit(data) {
+    CleanModal(false);
+    $("#txtName").val(data.Name);
+    $("#txtDescription").val(data.Description);
+    $("#dvId").prop("hidden", false);
+    $("#txtId").val(data.Id);
+    $("#mdlSave").modal("show");
+}
 
 function CleanModal(isCreating) {
     $isCreating = isCreating;
@@ -28,9 +52,9 @@ function CleanModal(isCreating) {
 
 function GetJsonToSave() {
     var model = {};
-    model.Name = $("#txtName").val();
-    model.Description = $("#txtDescription").val();
-    model.Id = $("#txtId").val();
+    model.Name = $("#txtName").val().trim();
+    model.Description = $("#txtDescription").val().trim();
+    model.Id = $("#txtId").val().trim();
 
     return model;
 }
@@ -50,6 +74,58 @@ function Create(category) {
             }
             else {
                 alert("Error. try again");
+            }
+        },
+        failure: function (response) {
+            alert(response);
+        }
+    });
+}
+
+function Edit(category) {
+    $.ajax({
+        type: "POST",
+        url: urlEdit,
+        data: "{category: " + JSON.stringify(category) + "}",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (response) {
+            if (response === "OK") {
+                LoadTable();
+                alert("Saved Successfully");
+                $("#btnCloseModal").trigger("click");
+            }
+            else if (response === "NOK") {
+                alert("Not saved, try again!");
+            }
+            else {
+                alert("Error, try again later!");
+            }
+        },
+        failure: function (response) {
+            alert(response);
+        }
+    });
+}
+
+function Delete(category) {
+    $.ajax({
+        type: "POST",
+        url: urlDelete,
+        data: "{category: " + JSON.stringify(category) + "}",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (response) {
+            if (response === "OK") {
+                LoadTable();
+                alert("Deleted Successfully");
+                $("#btnCloseModal").trigger("click");
+            }
+            else if (response === "NOK") {
+                alert("Not deleted, try again!");
+            }
+            else {
+                alert("Error, try again later!");
             }
         },
         failure: function (response) {
@@ -80,7 +156,7 @@ function BuildTable(response) {
         $dataObject.destroy();
     }
 
-    $tableObjects = $("#tblCategories").DataTable({
+    $dataObject = $("#tblCategories").DataTable({
         data: response,
         columns: [            
             { "data": 'Id' },

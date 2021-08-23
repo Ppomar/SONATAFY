@@ -22,9 +22,9 @@ namespace WebApp.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(Category category) 
+        public ActionResult Create([Bind(Include = "Name, Description")] Category category) 
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 var business = new CategoryLogic();
                 var response = business.CreateCategory(category);
@@ -36,6 +36,34 @@ namespace WebApp.Controllers
             }
         }
 
+        [HttpPost]
+        public ActionResult Edit([Bind(Include = "Id, Name, Description")]Category category)
+        {
+            if (ModelState.IsValid)
+            {
+                var business = new CategoryLogic();
+                var response = business.EditCategory(category);
+                return Json(response, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json("MNOK", JsonRequestBehavior.AllowGet);
+            }
+        }
 
+        [HttpPost]
+        public ActionResult Delete([Bind(Include = "Id")] Category category)
+        {
+            if (category.Id > 0) 
+            {
+                var business = new CategoryLogic();
+                var response = business.DeleteCategory(category.Id);
+                return Json(response, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json("MNOK", JsonRequestBehavior.AllowGet);
+            }
+        }
     }
 }

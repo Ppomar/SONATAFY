@@ -24,7 +24,7 @@
             <tr>
                 <th>Id</th>
                 <th>Name</th>
-                <th>Description                
+                <th>Description
                 <th>Created</th>
                 <th>Actions</th>
             </tr>
@@ -43,8 +43,8 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div class="col-md-12" hidden>
-                    Id: <input id="txtId" type="text" class="form-control" />
+                <div id="dvId" class="col-md-12" hidden>
+                    Id: <input id="txtId" type="text" class="form-control" disabled />
                 </div>
                 <br />
 
@@ -55,7 +55,7 @@
 
                 <div class="col-md-12">
                     Description: <input id="txtDescription" type="text" class="form-control" />
-                </div>                
+                </div>
             </div>
             <div class="modal-footer">
                 <button id="btnCloseModal" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -67,5 +67,7 @@
 
 <script>
     var urlCreate = "@Url.Action("Create", "Category")";
+    var urlEdit = "@Url.Action("Edit", "Category")";
+    var urlDelete = "@Url.Action("Delete", "Category")";
     var urlGetCategories = "@Url.Action("GetCategories", "Category")";
 </script>

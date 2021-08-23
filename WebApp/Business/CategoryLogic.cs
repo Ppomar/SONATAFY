@@ -33,5 +33,24 @@ namespace Business
 
             return response;
         }
+
+        public string EditCategory(Category category)
+        {
+            category.CreatedBy = Environment.UserName;
+            category.CreatedDate = DateTime.Now;
+
+            var issaved = CategoryRepository.EditCategory(category);
+            var response = issaved ? "OK" : "NOK";
+
+            return response;
+        }
+
+        public string DeleteCategory(int id)
+        {            
+            var issaved = CategoryRepository.DeleteCategory(id);
+            var response = issaved ? "OK" : "NOK";
+
+            return response;
+        }
     }
 }

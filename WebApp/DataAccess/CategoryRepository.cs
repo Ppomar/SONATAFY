@@ -105,6 +105,50 @@ namespace DataAccess
                 cmd.Connection = conn;
                 cmd.CommandText = "SP_CATEGORY_EDIT";
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add(new SqlParameter("@Id", category.Id));
+                cmd.Parameters.Add(new SqlParameter("@Name", category.Name));
+                cmd.Parameters.Add(new SqlParameter("@Description", category.Description));
+                cmd.Parameters.Add(new SqlParameter("@LastUpdatedBy", category.CreatedBy));
+                cmd.Parameters.Add(new SqlParameter("@LastUpdatedDate", category.CreatedDate));
+
+                cmd.ExecuteNonQuery();
+
+                response = true;
+            }
+            catch (Exception ex)
+            {
+
+            }
+            finally
+            {
+                if (conn != null)
+                {
+                    conn.Close();
+                }
+            }
+
+            return response;
+        }
+
+        /// <summary>
+        /// Delete a existing category
+        /// </summary>
+        /// <param name="category">Delete category</param>
+        /// <returns>status</returns>
+        public static bool DeleteCategory(int id)
+        {
+            SqlConnection conn = null;
+            var response = false;
+
+            try
+            {
+                conn = OpenConnection();
+                var cmd = new SqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandText = "SP_CATEGORY_DELETE";
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add(new SqlParameter("@Id", id));                
+
                 cmd.ExecuteNonQuery();
 
                 response = true;

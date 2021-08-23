@@ -52,7 +52,7 @@ namespace DataAccess
         /// </summary>
         /// <param name="category">New category</param>
         /// <returns>status</returns>
-        public static bool CreateCategory(Category category)
+        public static bool Create(Category category)
         {
             SqlConnection conn = null;
             var response = false;
@@ -93,7 +93,7 @@ namespace DataAccess
         /// </summary>
         /// <param name="category">Updated category</param>
         /// <returns>status</returns>
-        public static bool EditCategory(Category category)
+        public static bool Edit(Category category)
         {
             SqlConnection conn = null;
             var response = false;
@@ -135,7 +135,7 @@ namespace DataAccess
         /// </summary>
         /// <param name="category">Delete category</param>
         /// <returns>status</returns>
-        public static bool DeleteCategory(int id)
+        public static bool Delete(int id)
         {
             SqlConnection conn = null;
             var response = false;

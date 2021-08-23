@@ -16,7 +16,7 @@ namespace DataAccessUnitTet
             category.Description = "all reading material, in the book category";
 
             var business = new CategoryLogic();
-            var response = business.CreateCategory(category);
+            var response = business.Create(category);
         }
     }
 }

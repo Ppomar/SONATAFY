@@ -16,7 +16,7 @@ namespace WebApp.Controllers
         public ActionResult GetCategories()
         {
             var business = new CategoryLogic();
-            var categories = business.GetCategories();
+            var categories = business.GetAll();
 
             return Json(categories, JsonRequestBehavior.AllowGet);
         }
@@ -27,7 +27,7 @@ namespace WebApp.Controllers
             if (ModelState.IsValid)
             {
                 var business = new CategoryLogic();
-                var response = business.CreateCategory(category);
+                var response = business.Create(category);
                 return Json(response, JsonRequestBehavior.AllowGet);
             }
             else
@@ -42,7 +42,7 @@ namespace WebApp.Controllers
             if (ModelState.IsValid)
             {
                 var business = new CategoryLogic();
-                var response = business.EditCategory(category);
+                var response = business.Edit(category);
                 return Json(response, JsonRequestBehavior.AllowGet);
             }
             else
@@ -57,7 +57,7 @@ namespace WebApp.Controllers
             if (category.Id > 0) 
             {
                 var business = new CategoryLogic();
-                var response = business.DeleteCategory(category.Id);
+                var response = business.Delete(category.Id);
                 return Json(response, JsonRequestBehavior.AllowGet);
             }
             else

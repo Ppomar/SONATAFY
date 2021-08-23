@@ -10,7 +10,7 @@ namespace Business
 {
     public class CategoryLogic
     {
-        public List<Category> GetCategories()
+        public List<Category> GetAll()
         {
             var list = CategoryRepository.GetAll();
             
@@ -23,31 +23,31 @@ namespace Business
             return list;
         }
 
-        public string CreateCategory(Category category)
+        public string Create(Category category)
         {
             category.CreatedBy = Environment.UserName;
             category.CreatedDate = DateTime.Now;
 
-            var issaved = CategoryRepository.CreateCategory(category);
+            var issaved = CategoryRepository.Create(category);
             var response = issaved ? "OK" : "NOK";
 
             return response;
         }
 
-        public string EditCategory(Category category)
+        public string Edit(Category category)
         {
             category.CreatedBy = Environment.UserName;
             category.CreatedDate = DateTime.Now;
 
-            var issaved = CategoryRepository.EditCategory(category);
+            var issaved = CategoryRepository.Edit(category);
             var response = issaved ? "OK" : "NOK";
 
             return response;
         }
 
-        public string DeleteCategory(int id)
+        public string Delete(int id)
         {            
-            var issaved = CategoryRepository.DeleteCategory(id);
+            var issaved = CategoryRepository.Delete(id);
             var response = issaved ? "OK" : "NOK";
 
             return response;

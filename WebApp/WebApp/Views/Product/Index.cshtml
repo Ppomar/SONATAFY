@@ -1,0 +1,88 @@
+﻿
+@{
+    ViewBag.Title = "Product";
+    Layout = "~/Views/_Shared/_Layout.cshtml";
+}
+<script src="~/Content/Scripts/ProductScript.js"></script>
+
+<br />
+<div class="col-md-12">
+    <h2>Product Maintenance</h2>
+</div>
+
+<br />
+<div class="col-md-12">
+    <button id="btnNewOpenModal" type="button" class="btn btn-primary" data-toggle="modal" data-target="#mdlSave">
+        Create Product
+    </button>
+</div>
+
+<br />
+<div class="col-md-12">
+    <table id="tblProducts" class="table table-hover">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Presentation</th>
+                <th>Price</th>
+                <th>Category</th>
+                <th>Created</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+    </table>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="mdlSave" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Category</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="dvId" class="col-md-12" hidden>
+                    Id: <input id="txtId" type="text" class="form-control" disabled />
+                </div>
+                <br />
+
+                <div class="col-md-12">
+                    Name: <input id="txtName" type="text" class="form-control" />
+                </div>
+                <br />
+
+                <div class="col-md-12">
+                    Presentation: <input id="txtPresentation" type="text" class="form-control" />
+                </div>
+                <br />
+
+                <div class="col-md-12">
+                    Price: <input id="txtPrice" type="number" class="form-control" />
+                </div>
+                <br />
+
+                <div class="col-md-12">
+                    Category: <select id="slcCategory" type="text" class="form-control">
+                        <option value="0" disabled selected>Select Category</option>
+                    </select>
+                </div>                
+            </div>
+            <div class="modal-footer">
+                <button id="btnCloseModal" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button id="btnSave" type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var urlCreate = "@Url.Action("Create", "Product")";
+    var urlEdit = "@Url.Action("Edit", "Product")";
+    var urlDelete = "@Url.Action("Delete", "Product")";
+    var urlGetProducts = "@Url.Action("GetProducts", "Product")";
+    var urlGetCategories = "@Url.Action("GetCategories", "Category")";
+</script>
